@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     String processingStr ;
     int filecount = 0;
     Set<String> visited_dir;
+    Thread t1,t2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 String msgStr = (String) msg.obj;
                 textObj.setText(msgStr);
+                if(msg.what ==1)
+                    startButton.setEnabled(true);
             }
         };
         updateCount = new Handler(){
@@ -72,12 +75,13 @@ public class MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
+                startButton.setEnabled(false);
                 tmpMsg = new Message();
                 processingStr = "Processing ...";
                 tmpMsg.obj = (Object) processingStr;
                 updateHandler.sendMessage(tmpMsg);
                 filecount = 0;
-                new Thread(new Runnable() {
+                t1 = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         File outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "snapshot.txt");
@@ -90,11 +94,14 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             traverse_dir(directory, outStream);
+                            // scan finished
+                            outStream.close();
                             processingStr = "Done! number of File = " + filecount;
                             tmpMsg = new Message();
                             tmpMsg.obj = (Object) processingStr;
+                            tmpMsg.what = 1;
                             updateHandler.sendMessage(tmpMsg);
-                            outStream.close();
+
                         } catch (FileNotFoundException e){
                             e.printStackTrace();
                         } catch (IOException e){
@@ -103,7 +110,10 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                }).start();
+                });
+                t1.start();
+
+
 
             }
         });
