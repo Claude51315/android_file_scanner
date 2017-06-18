@@ -10,4 +10,4 @@ Scan and gernerate SHA1 fingerprint all the files of 4KB chunks in data partitio
 
 This is my first App. 
 
-![](http://imgur.com/a/RZTRO)
+![demo](http://i.imgur.com/OaxInPT.png)
