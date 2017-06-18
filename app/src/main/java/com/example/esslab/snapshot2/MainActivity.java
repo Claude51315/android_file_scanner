@@ -14,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import java.io.*;
 import java.security.MessageDigest;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         final TextView textObj = (TextView) findViewById(R.id.hello);
         final TextView textCount = (TextView) findViewById(R.id.fileCount);
+        final Button startButton = (Button) findViewById(R.id.startButton);
+
         visited_dir = Collections.emptySet();
         click = 0;
         setSupportActionBar(toolbar);
@@ -64,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 textCount.setText(Integer.toString(count));
             }
         };
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        startButton.setX(500);
+        startButton.setY(900);
+        startButton.setOnClickListener(new Button.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                click++;
+            public void onClick(View v) {
                 tmpMsg = new Message();
                 processingStr = "Processing ...";
                 tmpMsg.obj = (Object) processingStr;
@@ -101,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }).start();
+
             }
         });
     }
