@@ -1,7 +1,7 @@
 File scanner
 ===
 
-Scan and gernerate SHA1 fingerprint all the files of 4KB chunks in data partition.
+Scan and gernerate SHA1 fingerprint and entrophy of all the files at granularity of 4KB chunk in storage partition.
 
 
 ## Lesson learned
